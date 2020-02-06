@@ -2,13 +2,13 @@
 
 imgcat written in Clojure
 
-### Installation
+## Installation
 
 Add the following dependency to your `project.clj` file
 
 [![Clojars Project](https://clojars.org/clj-imgcat/latest-version.svg)](https://clojars.org/clj-imgcat)
 
-### Usage
+## Usage
 
 After launching the REPL in an iTerm window,
 
@@ -32,13 +32,13 @@ Usage: lein run <image file>
 % lein run images/logo.png
 ```
 
-### References
+## References
 
 Inline Images Protocol for iTerm2. [doc](https://www.iterm2.com/documentation-images.html)
 
 Original sample [code](https://iterm2.com/utilities/imgcat)
 
-### License
+## License
 
 Copyright (c) 2020 hisaitami
 Distributed under the terms of the [MIT License](LICENSE)
