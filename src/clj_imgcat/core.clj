@@ -23,3 +23,8 @@
   "Displays an image within a terminal."
   [file]
   (display (->base64-string (->bytes file))))
+
+(defn -main [& args]
+  (if-let [file (first args)]
+    (imgcat file)
+    (println "Usage: lein run <image file>")))
