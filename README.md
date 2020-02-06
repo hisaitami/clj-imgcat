@@ -9,6 +9,15 @@ imgcat written in Clojure
 (imgcat "https://clojure.org/images/clojure-logo-120b.png")
 ```
 
+Execute from command line
+
+```
+% lein run
+Usage: lein run <image file>
+
+% lein run https://clojure.org/images/clojure-logo-120b.png
+```
+
 ### Links
 
 Inline Images Protocol for iTerm2.
