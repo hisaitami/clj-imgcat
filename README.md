@@ -4,9 +4,12 @@ imgcat written in Clojure
 
 ### Usage
 
+[![Clojars Project](https://img.shields.io/clojars/v/clj-imgcat.svg)](https://clojars.org/clj-imgcat)
+
 ```
-(require '[clj-imgcat.core :refer [imgcat]])
-(imgcat "https://clojure.org/images/clojure-logo-120b.png")
+user=> (require '[clj-imgcat.core :refer [imgcat]])
+nil
+user=> (imgcat "https://clojure.org/images/clojure-logo-120b.png")
 ```
 
 Execute from command line
