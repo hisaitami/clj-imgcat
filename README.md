@@ -40,6 +40,6 @@ Original sample [code](https://iterm2.com/utilities/imgcat)
 
 ## License
 
-Copyright (c) 2020 hisaitami
+Copyright (c) 2023 hisaitami
 Distributed under the terms of the [MIT License](LICENSE)
 
