@@ -14,14 +14,14 @@
   (-> (sh "base64" file)
       :out str/trim-newline))
 
-(deftest file->bytes-test
+(deftest ->bytes-test
   (testing "Load a local file as byte-array"
-    (is (= (-> test-file file->bytes count)
+    (is (= (-> test-file ->bytes count)
            (wc "-c" test-file)))))
 
-(deftest bytes->base64-string-test
+(deftest ->base64-string-test
   (testing "Encode using Base64 representation"
-    (is (= (-> test-file file->bytes bytes->base64-string)
+    (is (= (-> test-file ->bytes ->base64-string)
            (base64 test-file)))))
 
 (deftest display-test

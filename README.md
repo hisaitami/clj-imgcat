@@ -25,7 +25,7 @@ user=> (imgcat "https://clojure.org/images/clojure-logo-120b.png")
 Specify options,
 
 ```
-user=> (imgcat "images/logo.png" {:width 40 :height 10 :preserveAspectRatio 0})
+user=> (imgcat "images/logo.png" :width 40 :height 10 :preserveAspectRatio 0)
 ```
 
 Execute via `lein run`
