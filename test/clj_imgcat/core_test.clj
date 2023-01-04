@@ -24,6 +24,16 @@
     (is (= (-> test-file ->bytes ->base64-string)
            (base64 test-file)))))
 
+(deftest parse-options-test
+  (testing "Takes nil or empty map, returns empty string"
+    (is (= (parse-options nil) (parse-options {}) "")))
+  (testing "Takes options and returns them as string"
+    (is (= (parse-options {:width 34 :height 41 :preserveAspectRatio 1})
+           "width=34;height=41;preserveAspectRatio=1;"))
+  (testing "Ignore undefined options, returns empty string"
+    (is (= (parse-options {:foo 1}) "")))
+    (is (= (parse-options {:foo 1 :width 21 :height 23}) "width=21;height=23;"))))
+
 (deftest display-test
   (testing "Inline Image Protocol"
     (let [base64-string (base64 test-file)]
