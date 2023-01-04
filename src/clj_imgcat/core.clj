@@ -14,10 +14,21 @@
   [^bytes bytes]
   (.encodeToString (java.util.Base64/getEncoder) bytes))
 
-(defn parse-options [{:keys [:width :height :preserveAspectRatio] :as options}]
-  (->> options
-       (map (fn [[k v]] (str (name k) "=" v ";")))
-       (apply str)))
+(defn parse-options
+  "width - output width of the image in pixels
+   height - output height of the image in pixels
+   preserveaspectratio - 0 or 1, if 1, fill the specified width and height without stretching"
+  [{:keys [width
+           height
+           preserveAspectRatio]}]
+  (apply str 
+         (concat
+          (when (pos-int? width)
+            ["width=" width ";"])
+          (when (pos-int? height)
+            ["height=" height ";"])
+          (when (some #(= % preserveAspectRatio) [0 1])
+            ["preserveAspectRatio=" preserveAspectRatio ";"]))))
 
 (defn display
   "Displays an image using Inline Image Protocol for iTerm2"
