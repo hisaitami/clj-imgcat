@@ -9,10 +9,15 @@
     (io/copy in out)
     (.toByteArray out)))
 
-(defn ->base64-string
+(defn bytes->base64
   "Encodes the byte array into a base64 string"
   [^bytes bytes]
   (.encodeToString (java.util.Base64/getEncoder) bytes))
+
+(defn string->base64
+  "Encodes the string into a base64 string"
+  [^java.lang.String string]
+  (bytes->base64 (byte-array (map byte string))))
 
 (defn parse-options
   "width - output width of the image in pixels
@@ -21,26 +26,29 @@
   [{:keys [width
            height
            preserveAspectRatio]}]
-  (apply str 
+  (apply str
          (concat
           (when (pos-int? width)
-            ["width=" width ";"])
+            [";width=" width])
           (when (pos-int? height)
-            ["height=" height ";"])
+            [";height=" height])
           (when (some #(= % preserveAspectRatio) [0 1])
-            ["preserveAspectRatio=" preserveAspectRatio ";"]))))
+            [";preserveAspectRatio=" preserveAspectRatio]))))
 
 (defn display
   "Displays an image using Inline Image Protocol for iTerm2"
-  [base64-string & {:as options}]
-  (println (str "\033]1337;"
-                "File=;" (parse-options options) "inline=1:"
-                base64-string "\007")))
+  [file & {:as options}]
+  (let [bytes (-> file ->bytes)]
+    (println (str "\033]1337;File=inline=1"
+                  ";size=" (count bytes)
+                  ";name=" (string->base64 (str file))
+                  (parse-options options)
+                  ":" (bytes->base64 bytes) "\007"))))
 
 (defn imgcat
   "Displays an image within a terminal."
   [file & {:as options}]
-  (display (-> file ->bytes ->base64-string) options))
+  (display file options))
 
 (defn -main [& args]
   (if-let [file (first args)]
