@@ -21,8 +21,8 @@
 
 (defn parse-options
   "width - output width of the image in pixels
-   height - output height of the image in pixels
-   preserveaspectratio - 0 or 1, if 1, fill the specified width and height without stretching"
+  height - output height of the image in pixels
+  preserveaspectratio - 0 or 1, if 1, fill the specified width and height without stretching"
   [{:keys [width
            height
            preserveAspectRatio]}]
