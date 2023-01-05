@@ -1,5 +1,6 @@
 (ns clj-imgcat.core
-  (:require [clojure.java.io :as io]))
+  (:require [clojure.java.io :as io])
+  (:gen-class))
 
 (defn ->bytes
   "read a file into a byte array"
