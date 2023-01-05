@@ -2,6 +2,10 @@
 
 imgcat written in Clojure
 
+Displays one ore more images in iTerm2 inline. For example:
+
+ ![](https://github.com/hisaitami/clj-imgcat/blob/master/screen.png)
+
 ## Installation
 
 Add the following dependency to your `project.clj` file
@@ -14,7 +18,6 @@ After launching the REPL in an iTerm window,
 
 ```
 user=> (require '[clj-imgcat.core :refer [imgcat]])
-nil
 user=> (imgcat "images/logo.png")
 ```
 To display remote image,
@@ -39,9 +42,20 @@ Usage: lein run <image file>
 
 ## References
 
-Inline Images Protocol for iTerm2. [doc](https://www.iterm2.com/documentation-images.html)
+* Inline Images Protocol for iTerm2. [doc](https://www.iterm2.com/documentation-images.html)
+* Original sample [code](https://iterm2.com/utilities/imgcat)
+* iTerm2's Proprietary Escape Codes [doc](https://iterm2.com/documentation-escape-codes.html)
 
-Original sample [code](https://iterm2.com/utilities/imgcat)
+## Todo
+
+The width and height are given as a number followed by a unit, or the word "auto".
+
+```
+N: N character cells.
+Npx: N pixels.
+N%: N percent of the session's width or height.
+auto: The image's inherent size will be used to determine an appropriate dimension.
+```
 
 ## License
 
