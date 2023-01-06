@@ -18,7 +18,7 @@ After launching the REPL in an iTerm window,
 
 ```
 user=> (require '[clj-imgcat.core :refer [imgcat]])
-user=> (imgcat "images/logo.png")
+user=> (imgcat "logo.png")
 ```
 To display remote image,
 
@@ -27,9 +27,13 @@ user=> (imgcat "https://clojure.org/images/clojure-logo-120b.png")
 ```
 Specify options,
 
+
 ```
-user=> (imgcat "images/logo.png" :width 40 :height 10 :preserveAspectRatio 0)
+user=> (imgcat "logo.png" :width "100px" :height "100px" :preserveAspectRatio 0)
 ```
+width and height are given as a number followed by a unit, `:width "50%"` or `":width "100px"`
+or `:width "auto"`.
+
 
 Execute via `lein run`
 
