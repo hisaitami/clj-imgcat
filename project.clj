@@ -1,4 +1,4 @@
-(defproject clj-imgcat "0.3.0-SNAPSHOT"
+(defproject clj-imgcat "0.4.0-SNAPSHOT"
   :description "imgcat written in Clojure"
   :url "https://github.com/hisaitami/clj-imgcat"
   :license {:name "MIT License"
