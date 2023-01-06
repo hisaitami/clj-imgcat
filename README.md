@@ -46,17 +46,6 @@ Usage: lein run <image file>
 * Original sample [code](https://iterm2.com/utilities/imgcat)
 * iTerm2's Proprietary Escape Codes [doc](https://iterm2.com/documentation-escape-codes.html)
 
-## Todo
-
-The width and height are given as a number followed by a unit, or the word "auto".
-
-```
-N: N character cells.
-Npx: N pixels.
-N%: N percent of the session's width or height.
-auto: The image's inherent size will be used to determine an appropriate dimension.
-```
-
 ## License
 
 Copyright (c) 2023 hisaitami

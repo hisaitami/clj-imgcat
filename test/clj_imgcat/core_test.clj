@@ -29,6 +29,22 @@
     (is (= (-> test-file ->bytes bytes->base64)
            (base64-file test-file)))))
 
+(deftest valid-size-test
+  (testing "Returns true"
+    (is (true? (valid-size? 10)))
+    (is (true? (valid-size? "10")))
+    (is (true? (valid-size? "01")))
+    (is (true? (valid-size? "10px")))
+    (is (true? (valid-size? "10%")))
+    (is (true? (valid-size? "auto")))
+    )
+  (testing "Returns false"
+    (is (false? (valid-size? -10)))
+    (is (false? (valid-size? "-10")))
+    (is (false? (valid-size? "1.0")))
+    (is (false? (valid-size? " 1px")))
+    (is (false? (valid-size? "1 %")))))
+
 (deftest parse-options-test
   (testing "Takes nil or empty map, returns empty string"
     (is (= (parse-options nil) (parse-options {}) "")))

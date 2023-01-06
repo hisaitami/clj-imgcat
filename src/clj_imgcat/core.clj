@@ -20,18 +20,28 @@
   [^java.lang.String string]
   (bytes->base64 (byte-array (map byte string))))
 
+(defn valid-size?
+  "width and height are given as a number followed by a unit, or the word \"auto\".
+  N: N character cells.
+  Npx: N pixels.
+  N%: N percent of the session's width or height.
+  auto: The image's inherent size will be used to determine an appropriate dimension.
+  "
+  [x]
+  (if (re-matches #"(\d+(px|%)*|auto)" (str x)) true false))
+
 (defn parse-options
-  "width - output width of the image in pixels
-  height - output height of the image in pixels
+  "width - output width of the image in character cells, pixels or percent
+  height - output height of the image in character cells, pixels or percent
   preserveaspectratio - 0 or 1, if 1, fill the specified width and height without stretching"
   [{:keys [width
            height
            preserveAspectRatio]}]
   (apply str
          (concat
-          (when (pos-int? width)
+          (when (valid-size? width)
             [";width=" width])
-          (when (pos-int? height)
+          (when (valid-size? height)
             [";height=" height])
           (when (some #(= % preserveAspectRatio) [0 1])
             [";preserveAspectRatio=" preserveAspectRatio]))))
@@ -47,7 +57,12 @@
                   ":" (bytes->base64 bytes) "\007"))))
 
 (defn imgcat
-  "Displays an image within a terminal."
+  "Displays an image within a terminal.
+
+  Examples:
+      (imgcat \"logo.png\")
+      (imgcat \"avatar.png\" :width \"100px\" :height \"100px\")
+  "
   [file & {:as options}]
   (display file options))
 
