@@ -16,8 +16,8 @@
       :out str/trim-newline))
 
 (defn- base64-string [s]
-  (-> (sh "bash" "-c" (str "echo " s " | base64"))
-      :out (str/replace "Cg==" "") str/trim-newline))
+  (-> (sh "bash" "-c" (format "echo -n %s | base64" s))
+      :out str/trim-newline))
 
 (deftest ->bytes-test
   (testing "Load a local file as byte-array"
