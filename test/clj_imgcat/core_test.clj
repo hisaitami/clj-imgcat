@@ -24,18 +24,17 @@
     (is (= (-> test-file ->bytes count)
            (wc "-c" test-file)))))
 
-(deftest bytes->base64-test
-  (testing "Encode bytes using Base64 representation"
-    (is (= (-> test-file ->bytes bytes->base64)
-           (base64-file test-file)))))
-
-(deftest string->base64-test
-  (testing "Encode string using Base64 representation"
-    (is (= (string->base64 "hello")
-           (base64-string "hello"))))
-  (testing "Encode multi-byte string using Base64 representation"
-    (is (= (string->base64 "こんにちは")
-           (base64-string "こんにちは")))))
+(deftest ->base64-test
+  (testing "Base64 Encoding"
+    (testing "bytes"
+      (is (= (-> test-file ->bytes ->base64)
+             (base64-file test-file))))
+    (testing "ascii string"
+      (is (= (->base64 (.getBytes "hello"))
+             (base64-string "hello"))))
+    (testing "multi-byte string"
+      (is (= (->base64 (.getBytes "こんにちは"))
+             (base64-string "こんにちは"))))))
 
 (deftest valid-size-test
   (testing "Returns true"

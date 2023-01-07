@@ -10,15 +10,10 @@
     (io/copy in out)
     (.toByteArray out)))
 
-(defn bytes->base64
+(defn ->base64
   "Encodes the byte array into a base64 string"
   [^bytes bytes]
   (.encodeToString (java.util.Base64/getEncoder) bytes))
-
-(defn string->base64
-  "Encodes the string into a base64 string"
-  [^java.lang.String string]
-  (bytes->base64 (.getBytes string)))
 
 (defn valid-size?
   "width and height are given as a number followed by a unit, or the word \"auto\".
@@ -52,9 +47,9 @@
   (let [bytes (-> file ->bytes)]
     (println (str "\033]1337;File=inline=1"
                   ";size=" (count bytes)
-                  ";name=" (string->base64 (str file))
+                  ";name=" (->base64 (.getBytes (str file)))
                   (parse-options options)
-                  ":" (bytes->base64 bytes) "\007"))))
+                  ":" (->base64 bytes) "\007"))))
 
 (defn imgcat
   "Displays an image within a terminal.
