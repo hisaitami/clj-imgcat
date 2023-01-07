@@ -18,7 +18,7 @@
 (defn string->base64
   "Encodes the string into a base64 string"
   [^java.lang.String string]
-  (bytes->base64 (byte-array (map byte string))))
+  (bytes->base64 (.getBytes string)))
 
 (defn valid-size?
   "width and height are given as a number followed by a unit, or the word \"auto\".

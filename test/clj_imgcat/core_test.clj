@@ -29,6 +29,14 @@
     (is (= (-> test-file ->bytes bytes->base64)
            (base64-file test-file)))))
 
+(deftest string->base64-test
+  (testing "Encode string using Base64 representation"
+    (is (= (string->base64 "hello")
+           (base64-string "hello"))))
+  (testing "Encode multi-byte string using Base64 representation"
+    (is (= (string->base64 "こんにちは")
+           (base64-string "こんにちは")))))
+
 (deftest valid-size-test
   (testing "Returns true"
     (is (true? (valid-size? 10)))
