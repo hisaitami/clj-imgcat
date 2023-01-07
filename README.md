@@ -27,14 +27,18 @@ user=> (imgcat "https://clojure.org/images/clojure-logo-120b.png")
 ```
 Specify options,
 
+width and height are given as a number followed by a unit.
 
 ```
-user=> (imgcat "logo.png" :width "100px" :height "100px" :preserveAspectRatio 0)
+; N character cells
+user=> (imgcat "logo.png" :width 10)
+
+; N pixels
+user=> (imgcat "logo.png" :width "50px" :height "100px" :preserveAspectRatio 0)
+
+; N percent of the session's width or height
+user=> (imgcat "logo.png" :width "25%")
 ```
-width and height are given as a number followed by a unit, `:width "50%"` or `":width "100px"`
-or `:width "auto"`.
-
-
 Execute via `lein run`
 
 ```
