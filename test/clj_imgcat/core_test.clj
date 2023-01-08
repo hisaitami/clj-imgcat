@@ -62,24 +62,74 @@
     (is (= (parse-options {:foo 1}) "")))
     (is (= (parse-options {:foo 1 :width 21 :height 23}) ";width=21;height=23"))))
 
-(defn- inline-image-protocol
-  ([file]
-   (inline-image-protocol file nil))
-  ([file opts]
-   (str "\033]1337;File=inline=1"
-        ";size=" (wc "-c" test-file)
-        ";name=" (base64-string test-file)
-        opts
-        ":" (base64-file test-file) "\007"
-        \newline)))
-
-(deftest display-test
+(deftest inline-image-protocol-test
   (testing "Inline Image Protocol"
-    (is (= (inline-image-protocol test-file)
-           (with-out-str (display test-file))))))
+    (let [img (.getBytes "123456789")
+          name "hello"]
+      (testing "No optional outputs"
+        (is (= (inline-image-protocol img name)
+               (inline-image-protocol img name {})
+               (inline-image-protocol img name nil)
+               (format "\033]1337;File=inline=1;size=%d;name=%s:%s\007"
+                       (count img) (->base64 (.getBytes name)) (->base64 img)))))
+      (testing "with options"
+        (is (= (inline-image-protocol img name {:width 40})
+               (format "\033]1337;File=inline=1;size=%d;name=%s;width=40:%s\007"
+                       (count img) (->base64 (.getBytes name)) (->base64 img))))))))
+
+(deftest print_image-test
+  (testing "Prints a string of Inline Image Protocol"
+    (let [img (->bytes test-file)
+          name (str test-file)]
+      (testing "with minimum args"
+        (is (= (with-out-str (print_image img name {}))
+               (with-out-str (print_image img name nil))
+               (format "\033]1337;File=inline=1;size=%d;name=%s:%s\007"
+                       (count img)
+                       (base64-string (str test-file))
+                       (base64-file test-file)))))
+      (testing "with options"
+        (is (= (with-out-str (print_image img name {:width 80}))
+               (format "\033]1337;File=inline=1;size=%d;name=%s;width=80:%s\007"
+                       (count img)
+                       (base64-string (str test-file))
+                       (base64-file test-file)))))
+      (testing "with options and more"
+        (is (= (with-out-str (print_image img name {:width 80} \newline name \newline))
+               (format "\033]1337;File=inline=1;size=%d;name=%s;width=80:%s\007%s"
+                       (count img)
+                       (base64-string (str test-file))
+                       (base64-file test-file)
+                       (apply str [\newline name \newline]))))))))
 
 (deftest imgcat-test
-  (testing "imgcat logic"
-    (is (= (inline-image-protocol test-file";width=11;height=13;preserveAspectRatio=0")
-           (with-out-str (display test-file :width 11 :height 13 :preserveAspectRatio 0))))))
+  (testing "with bytes"
+    (is (= (with-out-str (imgcat (->bytes test-file)))
+           (format "\033]1337;File=inline=1;size=%d;name=%s:%s\007%s"
+                   (count (->bytes test-file))
+                   ""
+                   (base64-file test-file)
+                   \newline))))
+  (testing "with file path"
+    (is (= (with-out-str (imgcat (str test-file)))
+           (format "\033]1337;File=inline=1;size=%d;name=%s:%s\007%s"
+                   (count (->bytes test-file))
+                   (base64-string (str test-file))
+                   (base64-file test-file)
+                   \newline))))
+  (testing "with file"
+    (is (= (with-out-str (imgcat test-file))
+           (format "\033]1337;File=inline=1;size=%d;name=%s:%s\007%s"
+                   (count (->bytes test-file))
+                   (base64-string (str test-file))
+                   (base64-file test-file)
+                   \newline))))
+  (testing "options"
+    (is (= (with-out-str (imgcat test-file :width "10px" :height "20px" :preserveAspectRatio 0))
+           (format "\033]1337;File=inline=1;size=%d;name=%s%s:%s\007%s"
+                   (count (->bytes test-file))
+                   (base64-string (str test-file))
+                   ";width=10px;height=20px;preserveAspectRatio=0"
+                   (base64-file test-file)
+                   \newline)))))
 
