@@ -41,25 +41,31 @@
           (when (some #(= % preserveAspectRatio) [0 1])
             [";preserveAspectRatio=" preserveAspectRatio]))))
 
-(defn display
-  "Displays an image using Inline Image Protocol for iTerm2"
-  [file & {:as options}]
-  (let [bytes (-> file ->bytes)]
-    (println (str "\033]1337;File=inline=1"
-                  ";size=" (count bytes)
-                  ";name=" (->base64 (.getBytes (str file)))
-                  (parse-options options)
-                  ":" (->base64 bytes) "\007"))))
+(defn inline-image-protocol
+  "Returns the string of Inline Image Protocol for iTerm2"
+  [^bytes img ^java.lang.String name & options]
+  (str "\033]1337;File=inline=1"
+       ";size=" (count img)
+       ";name=" (->base64 (.getBytes name))
+       (parse-options options)
+       ":" (->base64 img) "\007"))
+
+(defn print_image
+  "Display bytes b using Inline Image Protocol with args filename n and options"
+  [bytes fname options & more]
+  (print (apply str (inline-image-protocol bytes fname options) more)))
 
 (defn imgcat
   "Displays an image within a terminal.
-
   Examples:
       (imgcat \"logo.png\")
-      (imgcat \"avatar.png\" :width \"100px\" :height \"100px\")
+      (imgcat \"logo.png\" :width 80)
+      (imgcat \"logo.png\" :width \"25%\" :height \"25%\")
+      (imgcat \"logo.png\" :width \"50px\" :height \"100px\" :preserveaspectratio 0)
   "
-  [file & {:as options}]
-  (display file options))
+  [img & {:as options}]
+  (let [[bytes fname] (if (bytes? img) [img ""] [(->bytes img) (str img)])]
+    (print_image bytes fname options \newline)))
 
 (defn -main [& args]
   (if-let [file (first args)]
