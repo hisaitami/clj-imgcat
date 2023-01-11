@@ -2,7 +2,7 @@
 
 imgcat written in Clojure
 
-Displays one ore more images in iTerm2 inline. For example:
+Display one or more images in iTerm2 inline. For example:
 
  ![](https://github.com/hisaitami/clj-imgcat/blob/master/screen.png)
 
