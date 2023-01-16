@@ -51,7 +51,7 @@
        ":" (->base64 img) "\007"))
 
 (defn print_image
-  "Display bytes b using Inline Image Protocol with args filename n and options"
+  "Display an image from bytes using Inline Image Protocol"
   [bytes fname options & more]
   (print (apply str (inline-image-protocol bytes fname options) more)))
 
