@@ -57,5 +57,5 @@ Usage: lein run <image file>
 ## License
 
 Copyright (c) 2023 hisaitami
-Distributed under the terms of the [MIT License](LICENSE)
 
+Distributed under the terms of the [MIT License](LICENSE)
