@@ -1,9 +1,10 @@
 (ns clj-imgcat.core-test
-  (:require [clojure.test :refer :all]
+  (:require [clojure.test :refer [deftest is testing]]
             [clojure.string :as str]
             [clojure.java.io :as io]
             [clojure.java.shell :refer [sh]]
-            [clj-imgcat.core :refer :all]))
+            [clj-imgcat.core :refer [->bytes ->base64 valid-size? parse-options
+                                     inline-image-protocol print_image imgcat]]))
 
 (def test-file (io/file "README.md"))
 
