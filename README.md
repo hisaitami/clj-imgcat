@@ -4,7 +4,7 @@ imgcat written in Clojure
 
 Display one or more images in iTerm2 inline. For example:
 
- ![](https://github.com/hisaitami/clj-imgcat/blob/master/screen.png)
+ ![clj-imgcat screenshot](screen.png)
 
 ## Installation
 
