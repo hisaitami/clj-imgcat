@@ -16,20 +16,20 @@ Add the following dependency to your `project.clj` file
 
 After launching the REPL in an iTerm window,
 
-```
+```clojure
 user=> (require '[clj-imgcat.core :refer [imgcat]])
 user=> (imgcat "logo.png")
 ```
 To display remote image,
 
-```
+```clojure
 user=> (imgcat "https://clojure.org/images/clojure-logo-120b.png")
 ```
 Specify options,
 
 width and height are given as a number followed by a unit.
 
-```
+```clojure
 ; N character cells
 user=> (imgcat "logo.png" :width 10)
 
@@ -41,7 +41,7 @@ user=> (imgcat "logo.png" :width "25%")
 ```
 Execute via `lein run`
 
-```
+```shell
 % lein run
 Usage: lein run <image file>
 
