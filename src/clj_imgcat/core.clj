@@ -20,8 +20,7 @@
   N: N character cells.
   Npx: N pixels.
   N%: N percent of the session's width or height.
-  auto: The image's inherent size will be used to determine an appropriate dimension.
-  "
+  auto: The image's inherent size will be used to determine an appropriate dimension."
   [x]
   (if (re-matches #"(\d+(px|%)*|auto)" (str x)) true false))
 
@@ -34,12 +33,12 @@
            preserveAspectRatio]}]
   (apply str
          (concat
-          (when (valid-size? width)
-            [";width=" width])
-          (when (valid-size? height)
-            [";height=" height])
-          (when (some #(= % preserveAspectRatio) [0 1])
-            [";preserveAspectRatio=" preserveAspectRatio]))))
+           (when (valid-size? width)
+             [";width=" width])
+           (when (valid-size? height)
+             [";height=" height])
+           (when (some #(= % preserveAspectRatio) [0 1])
+             [";preserveAspectRatio=" preserveAspectRatio]))))
 
 (defn inline-image-protocol
   "Returns the string of Inline Image Protocol for iTerm2"
@@ -58,11 +57,10 @@
 (defn imgcat
   "Displays an image within a terminal.
   Examples:
-      (imgcat \"logo.png\")
-      (imgcat \"logo.png\" :width 80)
-      (imgcat \"logo.png\" :width \"25%\" :height \"25%\")
-      (imgcat \"logo.png\" :width \"50px\" :height \"100px\" :preserveaspectratio 0)
-  "
+    (imgcat \"logo.png\")
+    (imgcat \"logo.png\" :width 80)
+    (imgcat \"logo.png\" :width \"25%\" :height \"25%\")
+    (imgcat \"logo.png\" :width \"50px\" :height \"100px\" :preserveaspectratio 0)"
   [img & {:as options}]
   (let [[bytes fname] (if (bytes? img) [img ""] [(->bytes img) (str img)])]
     (print_image bytes fname options \newline)))
