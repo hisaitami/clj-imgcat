@@ -44,8 +44,7 @@
     (is (true? (valid-size? "01")))
     (is (true? (valid-size? "10px")))
     (is (true? (valid-size? "10%")))
-    (is (true? (valid-size? "auto")))
-    )
+    (is (true? (valid-size? "auto"))))
   (testing "Returns false"
     (is (false? (valid-size? -10)))
     (is (false? (valid-size? "-10")))
@@ -59,8 +58,8 @@
   (testing "Takes options and returns them as string"
     (is (= (parse-options {:width 34 :height 41 :preserveAspectRatio 1})
            ";width=34;height=41;preserveAspectRatio=1"))
-  (testing "Ignore undefined options, returns empty string"
-    (is (= (parse-options {:foo 1}) "")))
+    (testing "Ignore undefined options, returns empty string"
+      (is (= (parse-options {:foo 1}) "")))
     (is (= (parse-options {:foo 1 :width 21 :height 23}) ";width=21;height=23"))))
 
 (deftest inline-image-protocol-test
