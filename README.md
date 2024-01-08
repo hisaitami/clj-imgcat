@@ -45,7 +45,13 @@ Execute via `lein run`
 % lein run
 Usage: lein run <image file>
 
-% lein run images/logo.png
+% lein run image.png
+```
+
+Execute via CLI
+
+```shell
+% clj -M -m clj-imgcat.core image.png
 ```
 
 ## References
