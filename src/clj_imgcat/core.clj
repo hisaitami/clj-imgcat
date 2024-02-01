@@ -33,12 +33,12 @@
            preserveAspectRatio]}]
   (apply str
          (concat
-           (when (valid-size? width)
-             [";width=" width])
-           (when (valid-size? height)
-             [";height=" height])
-           (when (some #(= % preserveAspectRatio) [0 1])
-             [";preserveAspectRatio=" preserveAspectRatio]))))
+          (when (valid-size? width)
+            [";width=" width])
+          (when (valid-size? height)
+            [";height=" height])
+          (when (some #(= % preserveAspectRatio) [0 1])
+            [";preserveAspectRatio=" preserveAspectRatio]))))
 
 (defn inline-image-protocol
   "Returns the string of Inline Image Protocol for iTerm2"
