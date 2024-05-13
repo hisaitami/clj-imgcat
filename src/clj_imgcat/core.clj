@@ -4,7 +4,7 @@
   (:gen-class))
 
 (defn ->bytes
-  "read a file into a byte array"
+  "Read a file as byte array"
   [file]
   (with-open [in (io/input-stream file)
               out (java.io.ByteArrayOutputStream.)]
@@ -28,7 +28,7 @@
 (defn parse-options
   "width - output width of the image in character cells, pixels or percent
   height - output height of the image in character cells, pixels or percent
-  preserveaspectratio - 0 or 1, if 1, fill the specified width and height without stretching"
+  preserveAspectRatio - 0 or 1, if 1, fill the specified width and height without stretching"
   [{:keys [width
            height
            preserveAspectRatio]}]
@@ -43,7 +43,9 @@
 
 (defn inline-image-protocol
   "Returns the string of Inline Image Protocol for iTerm2"
-  [^bytes img ^java.lang.String fname & opts]
+  [^bytes img
+   ^java.lang.String fname
+   & opts]
   (str "\033]1337;File=inline=1"
        ";size=" (count img)
        ";name=" (->base64 (.getBytes fname))
@@ -66,7 +68,9 @@
   (let [[img fname] (if (bytes? x) [x ""] [(->bytes x) (str x)])]
     (print_image img fname opts \newline)))
 
-(defn -main [file & opts]
+(defn -main
+  "The main entry point for CLI"
+  [file & opts]
   (imgcat file (->> (partition 2 opts)
                     (map (fn [[k v]] [(keyword (s/replace k #"^:" "")) v]))
                     (into {}))))
