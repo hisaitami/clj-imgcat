@@ -38,7 +38,7 @@
             [";width=" width])
           (when (valid-size? height)
             [";height=" height])
-          (when (some #(= % preserveAspectRatio) [0 1])
+          (when (some #(= % preserveAspectRatio) [0 1 "0" "1"])
             [";preserveAspectRatio=" preserveAspectRatio]))))
 
 (defn inline-image-protocol
