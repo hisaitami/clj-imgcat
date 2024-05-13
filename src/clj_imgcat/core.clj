@@ -43,17 +43,17 @@
 
 (defn inline-image-protocol
   "Returns the string of Inline Image Protocol for iTerm2"
-  [^bytes img ^java.lang.String name & options]
+  [^bytes img ^java.lang.String fname & opts]
   (str "\033]1337;File=inline=1"
        ";size=" (count img)
-       ";name=" (->base64 (.getBytes name))
-       (parse-options options)
+       ";name=" (->base64 (.getBytes fname))
+       (parse-options opts)
        ":" (->base64 img) "\007"))
 
 (defn print_image
   "Display an image from bytes using Inline Image Protocol"
-  [bytes fname options & more]
-  (print (apply str (inline-image-protocol bytes fname options) more)))
+  [img fname opts & more]
+  (print (apply str (inline-image-protocol img fname opts) more)))
 
 (defn imgcat
   "Displays an image within a terminal.
@@ -62,9 +62,9 @@
     (imgcat \"logo.png\" :width 80)
     (imgcat \"logo.png\" :width \"25%\" :height \"25%\")
     (imgcat \"logo.png\" :width \"50px\" :height \"100px\" :preserveaspectratio 0)"
-  [img & {:as options}]
-  (let [[bytes fname] (if (bytes? img) [img ""] [(->bytes img) (str img)])]
-    (print_image bytes fname options \newline)))
+  [x & {:as opts}]
+  (let [[img fname] (if (bytes? x) [x ""] [(->bytes x) (str x)])]
+    (print_image img fname opts \newline)))
 
 (defn -main [file & opts]
   (imgcat file (->> (partition 2 opts)
