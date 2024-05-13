@@ -46,12 +46,14 @@ Execute via `lein run`
 Usage: lein run <image file>
 
 % lein run image.png
+% lein run image.png :width 50%
 ```
 
 Execute via CLI
 
 ```shell
 % clj -M -m clj-imgcat.core image.png
+% clj -M -m clj-imgcat.core image.png :width 80%
 ```
 
 ## References

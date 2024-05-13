@@ -1,5 +1,6 @@
 (ns clj-imgcat.core
-  (:require [clojure.java.io :as io])
+  (:require [clojure.java.io :as io]
+            [clojure.string :as s])
   (:gen-class))
 
 (defn ->bytes
@@ -65,7 +66,7 @@
   (let [[bytes fname] (if (bytes? img) [img ""] [(->bytes img) (str img)])]
     (print_image bytes fname options \newline)))
 
-(defn -main [& args]
-  (if-let [file (first args)]
-    (imgcat file)
-    (println "Usage: lein run <image file>")))
+(defn -main [file & opts]
+  (imgcat file (->> (partition 2 opts)
+                    (map (fn [[k v]] [(keyword (s/replace k #"^:" "")) v]))
+                    (into {}))))
