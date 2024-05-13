@@ -13,8 +13,8 @@
 
 (defn ->base64
   "Encodes the byte array into a base64 string"
-  [^bytes bytes]
-  (.encodeToString (java.util.Base64/getEncoder) bytes))
+  [^bytes b]
+  (.encodeToString (java.util.Base64/getEncoder) b))
 
 (defn valid-size?
   "width and height are given as a number followed by a unit, or the word \"auto\".
